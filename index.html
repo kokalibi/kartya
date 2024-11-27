@@ -63,6 +63,18 @@
     </style>
 </head>
 <body>
-    sex
+    <div class="card" onclick="fordit(event)">
+        <div class="card-inner"> 
+            <div class="card-front"></div>
+            <div class="card-back">erhzuiop</div>
+        </div>
+    </div>
+
+    <script>
+        function fordit(event){
+            const card=event.currentTarget;
+            card.classList.toggle("flipped")
+        }
+    </script>
 </body>
 </html>
