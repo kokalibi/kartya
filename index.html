@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Memóriajáték</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,37 +64,75 @@
     </style>
 </head>
 <body>
-    <div class="jatekter">
-        <div class="kartya" onclick="fordit(this)">
-            <div class="kartya-belso">
-                <div class="kartya-elolap">asd1</div>
-                <div class="kartya-hatulap">1</div>
-            </div>
-        </div>
-        <div class="kartya" onclick="fordit(this)">
-            <div class="kartya-belso">
-                <div class="kartya-elolap">asd2</div>
-                <div class="kartya-hatulap">2</div>
-            </div>
-        </div>
-        <div class="kartya" onclick="fordit(this)">
-            <div class="kartya-belso">
-                <div class="kartya-elolap">asd3</div>
-                <div class="kartya-hatulap">3</div>
-            </div>
-        </div>
-        <div class="kartya" onclick="fordit(this)">
-            <div class="kartya-belso">
-                <div class="kartya-elolap">asd4</div>
-                <div class="kartya-hatulap">4</div>
-            </div>
-        </div>
+    <div class="jatekter" id="jatekter">
+    
     </div>
 
     <script>
+        const kartyaParok = [
+            { id: 1, text: "🐱" },
+            { id: 2, text: "🐶" },
+            { id: 3, text: "🐭" },
+            { id: 4, text: "🦊" },
+            { id: 1, text: "🐱" },
+            { id: 2, text: "🐶" },
+            { id: 3, text: "🐭" },
+            { id: 4, text: "🦊" },
+        ];
+
+        let kivalasztottKartyak = [];
+        let zarolt = false;
+
+
+        kartyaParok.sort(() => 0.5 - Math.random());
+
+        const jatekter = document.getElementById("jatekter");
+
+        kartyaParok.forEach((kartya, index) => {
+            const kartyaElem = document.createElement("div");
+            kartyaElem.classList.add("kartya");
+            kartyaElem.innerHTML = `
+                <div class="kartya-belso" data-id="${kartya.id}">
+                    <div class="kartya-elolap">${kartya.text}</div>
+                    <div class="kartya-hatulap"></div>
+                </div>
+            `;
+            kartyaElem.addEventListener("click", () => fordit(kartyaElem));
+            jatekter.appendChild(kartyaElem);
+        });
+
         function fordit(card) {
+            if (zarolt) return;
+
             const cardInner = card.querySelector('.kartya-belso');
-            cardInner.classList.toggle('forditott');
+
+    
+            if (cardInner.classList.contains('forditott')) return;
+
+            cardInner.classList.add('forditott');
+            kivalasztottKartyak.push(cardInner);
+
+            if (kivalasztottKartyak.length === 2) {
+                zarolt = true;
+                setTimeout(ellenoriz, 1000);
+            }
+        }
+
+        function ellenoriz() {
+            const [kartya1, kartya2] = kivalasztottKartyak;
+
+            if (kartya1.dataset.id === kartya2.dataset.id) {
+       
+                kartya1.parentElement.style.pointerEvents = "none";
+                kartya2.parentElement.style.pointerEvents = "none";
+            } else {
+              
+                kartya1.classList.remove('forditott');
+                kartya2.classList.remove('forditott');
+            }
+
+            kivalasztottKartyak = [];
+            zarolt = false;
         }
     </script>
 </body>
