@@ -87,7 +87,7 @@
         kartyaParok.sort(() => 0.5 - Math.random());
 
         const jatekter = document.getElementById("jatekter");
-
+        //letrehoz
         kartyaParok.forEach((kartya, index) => {
             const kartyaElem = document.createElement("div");
             kartyaElem.classList.add("kartya");
@@ -97,10 +97,11 @@
                     <div class="kartya-hatulap"></div>
                 </div>
             `;
+            //fordit meghiv
             kartyaElem.addEventListener("click", () => fordit(kartyaElem));
             jatekter.appendChild(kartyaElem);
         });
-
+        //fordit
         function fordit(card) {
             if (zarolt) return;
 
@@ -117,7 +118,7 @@
                 setTimeout(ellenoriz, 1000);
             }
         }
-
+        //ellenoriz
         function ellenoriz() {
             const [kartya1, kartya2] = kivalasztottKartyak;
 
