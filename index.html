@@ -5,64 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #f0f0f0;
-    }
-    
-    .jatekter {
-        display: grid;
-        grid-template-columns: repeat(4, 100px);
-        grid-gap: 10px;
-    }
-    
-    .kartya {
-        width: 100px;
-        height: 150px;
-        perspective: 1000px;
-    }
-    
-    .kartya-belso {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        transform-style: preserve-3d;
-        transition: transform 0.6s;
-        cursor: pointer;
-    }
-    
-    .kartya-belso.forditott {
-        transform: rotateY(180deg);
-    }
-    
-    .kartya-elolap, .kartya-hatulap {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2em;
-        font-weight: bold;
-    }
-    
-    .kartya-hatulap {
-        background-color: green;
-    }
-    
-    .kartya-elolap {
-        background-color: white;
-        transform: rotateY(180deg);
-    }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #426bb6;
+        }
+
+        .jatekter {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-gap: 10px;
+        }
+
+        .kartya {
+            width: 100px;
+            height: 150px;
+            perspective: 1000px;
+        }
+
+        .kartya-belso {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .kartya-belso.forditott {
+            transform: rotateY(180deg);
+        }
+
+        .kartya-elolap, .kartya-hatulap {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+
+        .kartya-hatulap {
+            background-color: green;
+        }
+
+        .kartya-elolap {
+            background-color: white;
+            transform: rotateY(180deg);
+        }
     </style>
 </head>
 <body>
-    sex
+    <div class="jatekter">
+        <div class="kartya" onclick="fordit(this)">
+            <div class="kartya-belso">
+                <div class="kartya-elolap">asd1</div>
+                <div class="kartya-hatulap">1</div>
+            </div>
+        </div>
+        <div class="kartya" onclick="fordit(this)">
+            <div class="kartya-belso">
+                <div class="kartya-elolap">asd2</div>
+                <div class="kartya-hatulap">2</div>
+            </div>
+        </div>
+        <div class="kartya" onclick="fordit(this)">
+            <div class="kartya-belso">
+                <div class="kartya-elolap">asd3</div>
+                <div class="kartya-hatulap">3</div>
+            </div>
+        </div>
+        <div class="kartya" onclick="fordit(this)">
+            <div class="kartya-belso">
+                <div class="kartya-elolap">asd4</div>
+                <div class="kartya-hatulap">4</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function fordit(card) {
+            const cardInner = card.querySelector('.kartya-belso');
+            cardInner.classList.toggle('forditott');
+        }
+    </script>
 </body>
 </html>
