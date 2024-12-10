@@ -8,9 +8,9 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             margin: 0;
             background-color: #426bb6;
         }
@@ -19,6 +19,7 @@
             display: grid;
             grid-template-columns: repeat(4, 100px);
             grid-gap: 10px;
+            margin-bottom: 20px;
         }
 
         .kartya {
@@ -61,15 +62,31 @@
             background-color: white;
             transform: rotateY(180deg);
         }
+
+        .ujrainditas-gomb {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .nyertes-uzenet {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <div class="jatekter" id="jatekter">
-    
-    </div>
+    <div class="jatekter" id="jatekter"></div>
+    <button class="ujrainditas-gomb" onclick="ujrainditas()">Újraindítás</button>
+    <div class="nyertes-uzenet" id="nyertesUzenet"></div>
 
     <script>
-        const kartyaParok = [
+        let kartyaParok = [
             { id: 1, text: "🐱" },
             { id: 2, text: "🐶" },
             { id: 3, text: "🐭" },
@@ -82,12 +99,20 @@
 
         let kivalasztottKartyak = [];
         let zarolt = false;
+        let parokSzama = 0;
 
+        function jatekBetoltese() {
+            const jatekter = document.getElementById("jatekter");
+            jatekter.innerHTML = ""; 
+            kivalasztottKartyak = [];
+            zarolt = false;
+            parokSzama = 0;
 
-        kartyaParok.sort(() => 0.5 - Math.random());
+          
+            kartyaParok.sort(() => 0.5 - Math.random());
 
         const jatekter = document.getElementById("jatekter");
-        //letrehoz
+
         kartyaParok.forEach((kartya, index) => {
             const kartyaElem = document.createElement("div");
             kartyaElem.classList.add("kartya");
@@ -97,17 +122,14 @@
                     <div class="kartya-hatulap"></div>
                 </div>
             `;
-            //fordit meghiv
             kartyaElem.addEventListener("click", () => fordit(kartyaElem));
             jatekter.appendChild(kartyaElem);
         });
-        //fordit
+
         function fordit(card) {
             if (zarolt) return;
 
             const cardInner = card.querySelector('.kartya-belso');
-
-    
             if (cardInner.classList.contains('forditott')) return;
 
             cardInner.classList.add('forditott');
@@ -123,11 +145,15 @@
             const [kartya1, kartya2] = kivalasztottKartyak;
 
             if (kartya1.dataset.id === kartya2.dataset.id) {
-       
                 kartya1.parentElement.style.pointerEvents = "none";
                 kartya2.parentElement.style.pointerEvents = "none";
+                parokSzama++;
+
+
+                if (parokSzama === kartyaParok.length / 2) {
+                    document.getElementById("nyertesUzenet").textContent = "Gratulálok! Megtaláltad az összes párt!";
+                }
             } else {
-              
                 kartya1.classList.remove('forditott');
                 kartya2.classList.remove('forditott');
             }
@@ -135,6 +161,13 @@
             kivalasztottKartyak = [];
             zarolt = false;
         }
+
+        function ujrainditas() {
+            jatekBetoltese();
+        }
+
+
+        jatekBetoltese();
     </script>
 </body>
 </html>
