@@ -108,23 +108,26 @@
             zarolt = false;
             parokSzama = 0;
 
-          
+  
             kartyaParok.sort(() => 0.5 - Math.random());
 
-        const jatekter = document.getElementById("jatekter");
+ 
+            kartyaParok.forEach((kartya) => {
+                const kartyaElem = document.createElement("div");
+                kartyaElem.classList.add("kartya");
+                kartyaElem.innerHTML = `
+                    <div class="kartya-belso" data-id="${kartya.id}">
+                        <div class="kartya-elolap">${kartya.text}</div>
+                        <div class="kartya-hatulap"></div>
+                    </div>
+                `;
+                kartyaElem.addEventListener("click", () => fordit(kartyaElem));
+                jatekter.appendChild(kartyaElem);
+            });
 
-        kartyaParok.forEach((kartya, index) => {
-            const kartyaElem = document.createElement("div");
-            kartyaElem.classList.add("kartya");
-            kartyaElem.innerHTML = `
-                <div class="kartya-belso" data-id="${kartya.id}">
-                    <div class="kartya-elolap">${kartya.text}</div>
-                    <div class="kartya-hatulap"></div>
-                </div>
-            `;
-            kartyaElem.addEventListener("click", () => fordit(kartyaElem));
-            jatekter.appendChild(kartyaElem);
-        });
+  
+            document.getElementById("nyertesUzenet").textContent = "";
+        }
 
         function fordit(card) {
             if (zarolt) return;
@@ -140,7 +143,7 @@
                 setTimeout(ellenoriz, 1000);
             }
         }
-        //ellenoriz
+
         function ellenoriz() {
             const [kartya1, kartya2] = kivalasztottKartyak;
 
@@ -149,7 +152,7 @@
                 kartya2.parentElement.style.pointerEvents = "none";
                 parokSzama++;
 
-
+    
                 if (parokSzama === kartyaParok.length / 2) {
                     document.getElementById("nyertesUzenet").textContent = "Gratulálok! Megtaláltad az összes párt!";
                 }
